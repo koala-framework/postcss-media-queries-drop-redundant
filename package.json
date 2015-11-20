@@ -1,0 +1,16 @@
+{
+  "name": "postcss-media-queries-drop-redundant",
+  "version": "0.0.1",
+  "description": "PostCSS plugin to delete redundant media query declarations",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "media querie"
+  ],
+  "author": "Michael Herbst <mh@vivid-planet.com>",
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^5.0.10"
+  }
+}
