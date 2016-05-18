@@ -52,16 +52,19 @@ module.exports = postcss.plugin('postcss-media-queries-drop-redundant', function
          */
         function deleteDuplicates(values) {
             for (i = 0; i < values.length; ++i) {
-                values[i].walkDecls(function (decl1) {
-                    for (j = i+1; j < values.length; ++j) {
-                        values[j].walkDecls(function (decl2) {
-                            if((decl1.prop == decl2.prop) && (decl1.value == decl2.value) ) {
-                                decl2.remove(); // delete if the property is already in an other media query
-                            }
-                        });
-                    }
+                values[i].walkRules(function (rule1) {
+                    rule1.walkDecls(function (decl1) {
+                        for (j = i+1; j < values.length; ++j) {
+                            values[j].walkRules(function (rule2) {
+                                rule2.walkDecls(function (decl2) {
+                                    if((decl1.prop == decl2.prop) && (decl1.value == decl2.value) && rule1.selector == rule2.selector) {
+                                        decl2.remove(); // delete if the property is already in an other media query with the same selector
+                                    }
+                                });
+                            });
+                        }
+                    });
                 });
-
             }
             return values;
         }
